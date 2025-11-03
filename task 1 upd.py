@@ -24,6 +24,15 @@ class Phone(Field):
         super().__init__(value)
 
 
+class Birthday(Field):
+    def __init__(self, value):
+        try:
+            self.date = datetime.strptime(value, "%d.%m.%Y")
+            super().__init__(value)
+        except ValueError:
+            raise ValueError("Invalid date format. Use DD.MM.YYYY")
+
+
 class Record:
     def __init__(self, name):
         self.name = Name(name)
@@ -99,12 +108,3 @@ class AddressBook(UserDict):
                         "congratulation_date": congratulation_date.strftime("%d.%m.%Y")
                     })
         return upcoming_birthdays
-
-
-class Birthday(Field):
-    def __init__(self, value):
-        try:
-            self.date = datetime.strptime(value, "%d.%m.%Y")
-            super().__init__(value)
-        except ValueError:
-            raise ValueError("Invalid date format. Use DD.MM.YYYY")
